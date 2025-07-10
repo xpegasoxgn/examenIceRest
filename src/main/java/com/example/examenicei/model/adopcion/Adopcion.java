@@ -1,4 +1,5 @@
 package com.example.examenicei.model.adopcion;
+import com.example.examenicei.model.Mascota;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
