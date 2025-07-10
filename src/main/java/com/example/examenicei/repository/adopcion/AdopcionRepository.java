@@ -7,5 +7,5 @@ import java.util.Optional;
 public interface AdopcionRepository extends JpaRepository<Adopcion, Long> {
     List<Adopcion> findByEstado(String estado);
     Optional<Adopcion> findByUsuarioIdAndEstado(Long usuarioId, String estado);
-    boolean existsByUsuarioIdAndEstado(String estado, Long usuarioId);
+
 }
