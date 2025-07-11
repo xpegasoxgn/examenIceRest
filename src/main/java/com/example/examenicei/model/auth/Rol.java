@@ -2,6 +2,7 @@ package com.example.examenicei.model.auth;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,7 @@ public class Rol {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String nombre;
+    @JsonIgnore
     @ManyToMany(mappedBy="roles")
     private Set<Usuarios> usuarios;
    

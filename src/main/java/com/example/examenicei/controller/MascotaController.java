@@ -1,7 +1,6 @@
 package com.example.examenicei.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.examenicei.model.Mascota;
 import com.example.examenicei.service.MascotaService;
@@ -30,6 +27,16 @@ public class MascotaController {
     public ResponseEntity<List<Mascota>> getMascotas() {
         try {
             return ResponseEntity.ok(mascotaService.getMascotas());
+        } 
+        catch (Exception e) {
+            return null;
+        }
+    }
+    
+    @GetMapping("/mascota_disponible")
+    public ResponseEntity<List<Mascota>> getMascotasDisponibles() {
+        try {
+            return ResponseEntity.ok(mascotaService.getMascotasDisponibles());
         } 
         catch (Exception e) {
             return null;
