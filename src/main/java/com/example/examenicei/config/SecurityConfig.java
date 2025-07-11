@@ -29,24 +29,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-        .csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/auth/login", "/auth/register").permitAll()
-                .anyRequest().authenticated()
-        )
-        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-        .exceptionHandling(ex -> ex
-                .accessDeniedHandler((req, res, ex2) -> {
-                    res.setStatus(HttpStatus.FORBIDDEN.value());
-                    res.setContentType("application/json");
-                    res.getWriter().write("{\"error\":\"Acceso denegado\"}");
-                })
-        );
+            .csrf().disable()
+            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
         return http.build();
     }
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
