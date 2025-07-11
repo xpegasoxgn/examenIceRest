@@ -9,6 +9,8 @@ import com.example.examenicei.model.Mascota;
 public interface MascotaService {
 
     public List<Mascota> getMascotas() throws Exception;
+    
+    public List<Mascota> getMascotasDisponibles() throws Exception;
 
     public Mascota addMascota(Mascota paciente) throws Exception;
 

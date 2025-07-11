@@ -23,6 +23,11 @@ public class MascotaServiceImpl implements MascotaService{
     }
 
     @Override
+    public List<Mascota> getMascotasDisponibles() throws Exception {
+        return mascotaRepository.findMascotasDisponibles();
+    }
+
+    @Override
     public Mascota addMascota(Mascota mascota) throws Exception{
         return mascotaRepository.save(mascota);
     }
