@@ -30,7 +30,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PreAuthorize("hasAnyRole('ADMIN','ADOPTANTE')")
     @GetMapping("/hello")
     public String getMethodName() {
         return "hola funciona el jwt";
@@ -38,18 +38,13 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-        //TODO: process POST request
-            
         try {
             authService.register(request);
             return  ResponseEntity.ok("Usuario registreado");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body("ERROR: "+ e.getMessage());
-
         }
     }
-
-   
     
 }

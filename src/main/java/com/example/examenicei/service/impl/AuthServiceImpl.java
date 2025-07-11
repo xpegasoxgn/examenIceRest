@@ -72,30 +72,33 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
-    public void  register(RegisterRequest request) throws  Exception{
-
+    public void register(RegisterRequest request) throws Exception {
         if (usuarioRepository.findByUsername(request.getUsername()).isPresent()) {
-            throw  new Exception("El username ya esta siendo utilizado. Escoja otro");
+            throw new Exception("El username ya está siendo utilizado. Escoja otro.");
         }
-        Usuarios newUser= new Usuarios();
+
+        Usuarios newUser = new Usuarios();
         newUser.setUsername(request.getUsername());
         newUser.setEmail(request.getEmail());
         newUser.setNombre(request.getNombre());
         newUser.setPaterno(request.getPaterno());
         newUser.setMaterno(request.getMaterno());
-
         newUser.setPassword(passwordEncoders.encode(request.getPassword()));
-        Set<Rol> roles=new HashSet<>();
-        for (String nombreRol :request.getRoles()) {
-            Rol rol=rolRepository.findByNombre(nombreRol)
-                .orElseThrow(()-> new Exception("Rol no encontrado"+nombreRol));
 
-            roles.add(rol);
-            
+        Set<String> rolesRequest = request.getRoles();
+        if (rolesRequest == null || rolesRequest.isEmpty()) {
+            throw new Exception("Debe especificar al menos un rol.");
         }
+
+        Set<Rol> roles = new HashSet<>();
+        for (String nombreRol : rolesRequest) {
+            Rol rol = rolRepository.findByNombre(nombreRol)
+                .orElseThrow(() -> new Exception("Rol no encontrado: " + nombreRol));
+            roles.add(rol);
+        }
+
         newUser.setRoles(roles);
         usuarioRepository.save(newUser);
-
     }
 
 }
