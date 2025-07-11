@@ -1,5 +1,6 @@
 package com.example.examenicei.controller.Adopcion;
 
+import com.example.examenicei.controller.dto.adopcion.EstadoSolicitudDTO;
 import com.example.examenicei.model.adopcion.Adopcion;
 import com.example.examenicei.service.adopcion.AdopcionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,18 @@ public class AdopcionController {
         adopcionService.eliminarAdopcion(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/solicitud/{id}/estado")
+    public ResponseEntity<Void> actualizarEstadoSolicitud(
+            @PathVariable Long id,
+            @RequestBody EstadoSolicitudDTO dto) {
+        try {
+            adopcionService.actualizarEstadoSolicitud(id, dto.getEstado());
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 }

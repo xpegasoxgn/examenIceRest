@@ -1,8 +1,11 @@
 package com.example.examenicei.service.implAdopcion;
 
+import com.example.examenicei.model.Mascota;
 import com.example.examenicei.model.adopcion.Adopcion;
+import com.example.examenicei.repository.MascotaRepository;
 import com.example.examenicei.repository.adopcion.AdopcionRepository;
 import com.example.examenicei.service.adopcion.AdopcionService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.examenicei.service.adopcion.AdopcionService;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,8 @@ public class AdopcionServiceImpl implements AdopcionService {
 
     @Autowired
     private AdopcionRepository adopcionRepository;
+    @Autowired
+    private MascotaRepository mascotaRepository;
 
     @Override
     public List<Adopcion> getAllAdopciones() {
@@ -58,5 +63,22 @@ public class AdopcionServiceImpl implements AdopcionService {
     @Override
     public void eliminarAdopcion(Long id) {
         adopcionRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void actualizarEstadoSolicitud(Long solicitudId, String nuevoEstado) throws Exception {
+        Adopcion solicitud = adopcionRepository.findById(solicitudId)
+                .orElseThrow(() -> new Exception("Solicitud no encontrada"));
+
+        solicitud.setEstado(nuevoEstado);
+
+        if ("APROBADA".equalsIgnoreCase(nuevoEstado)) {
+            Mascota mascota = solicitud.getMascota();
+            mascota.setEstado("ADOPTADO");
+            mascotaRepository.save(mascota);
+        }
+
+        adopcionRepository.save(solicitud);
     }
 }

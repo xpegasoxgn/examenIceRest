@@ -9,4 +9,5 @@ public interface AdopcionService {
     Adopcion storeAdopcion(Adopcion adopcion);
     Adopcion updateAdopcion(Long id, Adopcion adopcion);
     void eliminarAdopcion(Long id);
+    void actualizarEstadoSolicitud(Long solicitudId, String nuevoEstado) throws Exception;
 }
